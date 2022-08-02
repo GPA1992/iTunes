@@ -10,15 +10,12 @@ import NotFound from './Pages/NotFound';
 import { createUser } from './services/userAPI';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
+    state = {
       name: '',
       disableEnter: true,
       loged: false,
       onLoading: false,
     };
-  }
 
   getName = ({ target }) => {
     const { value } = target;
@@ -46,7 +43,7 @@ class App extends React.Component {
       <div>
         <BrowserRouter>
           <Switch>
-            <Route path="/search" component={ Search } />
+            <Route exact path="/search" component={ Search } />
             {loged ? <Redirect to="/search" /> : <Route
               exact
               path="/"
