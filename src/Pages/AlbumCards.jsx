@@ -8,6 +8,7 @@ class AlbumCards extends Component {
     return (
       <div>
         <img src={ albumImage } alt={ albumName } />
+        <br />
         <Link
           to={ `/album/${collectionId}` }
           data-testid={ `link-to-album-${collectionId}` }
@@ -20,6 +21,7 @@ class AlbumCards extends Component {
         <h3>
           { `Artista: ${artistName}`}
         </h3>
+        <hr />
       </div>
     );
   }

@@ -91,7 +91,6 @@ class Search extends Component {
               albumImage={ album.artworkUrl100 }
               albumName={ album.collectionName }
               artistName={ album.artistName }
-              releaseDatee={ album.releaseDate }
             />
           ))}
         </div>
