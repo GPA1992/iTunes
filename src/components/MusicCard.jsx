@@ -28,9 +28,11 @@ class MusicCard extends Component {
     this.setState({ onLoading: true });
     const songs = await getMusic(id);
     await addSong(songs[0]);
+    let checkedState = false;
+    if (checked) checkedState = true;
     this.setState({
       onLoading: false,
-      checked,
+      checked: checkedState,
     });
   }
 
