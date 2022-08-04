@@ -11,10 +11,11 @@ class Album extends Component {
     this.state = {
       artistInfo: {},
       songs: [],
+
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.getAnyMusic();
   }
 
@@ -51,6 +52,7 @@ class Album extends Component {
                 albumImage={ artworkUrl100 }
                 trackId={ trackId }
                 songs={ songs }
+                trackName={ trackName }
               />
             ))}
           </div>

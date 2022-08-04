@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import getMusic from '../services/musicsAPI';
 import Loading from './Loading';
 
@@ -9,22 +9,35 @@ class MusicCard extends Component {
     super();
     this.state = {
       onLoading: false,
+      favoriteSong: [],
+      checked: false,
     };
   }
 
+  async componentDidMount() {
+    const favoriteSongs = await getFavoriteSongs();
+    const arrayID = [];
+    favoriteSongs.forEach((songs) => (
+      arrayID.push(songs.trackId)
+    ));
+    this.setState({ favoriteSong: [...arrayID] });
+  }
+
   addFavoriteSong = async ({ target }) => {
-    const { id } = target;
+    const { id, checked } = target;
     this.setState({ onLoading: true });
     const songs = await getMusic(id);
     await addSong(songs[0]);
     this.setState({
       onLoading: false,
+      checked,
     });
   }
 
   render() {
-    const { songName, songPreview, trackId } = this.props;
-    const { onLoading } = this.state;
+    const { songName, songPreview, trackId, trackName } = this.props;
+    const { onLoading, favoriteSong, checked } = this.state;
+    const songVerify = favoriteSong.some((songID) => songID === trackId);
     return (
       <div>
         <div>
@@ -43,9 +56,11 @@ class MusicCard extends Component {
             Favorita
             <input
               data-testid={ `checkbox-music-${trackId}` }
-              onClick={ this.addFavoriteSong }
+              onChange={ this.addFavoriteSong }
               id={ trackId }
               type="checkbox"
+              name={ trackName }
+              checked={ songVerify || checked }
             />
           </label>
           <hr />
@@ -59,7 +74,7 @@ MusicCard.propTypes = {
   songName: PropTypes.string.isRequired,
   songPreview: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
-/*   songs: PropTypes.string.isRequired, */
+  trackName: PropTypes.string.isRequired,
 };
 
 export default MusicCard;
