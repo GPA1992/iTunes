@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import getMusic from '../services/musicsAPI';
 import Loading from './Loading';
 
@@ -9,37 +9,42 @@ class MusicCard extends Component {
     super();
     this.state = {
       onLoading: false,
-      favoriteSong: [],
       checked: false,
     };
   }
 
   async componentDidMount() {
     const favoriteSongs = await getFavoriteSongs();
-    const arrayID = [];
-    favoriteSongs.forEach((songs) => (
-      arrayID.push(songs.trackId)
-    ));
-    this.setState({ favoriteSong: [...arrayID] });
+    const { trackId } = this.props;
+    const songVerify = favoriteSongs.some((songID) => songID.trackId === trackId);
+    this.setState({ checked: songVerify });
   }
 
-  addFavoriteSong = async ({ target }) => {
-    const { id, checked } = target;
+  addFavoriteSong = async (event) => {
+    event.preventDefault();
+    const { id, checked } = event.target;
     this.setState({ onLoading: true });
     const songs = await getMusic(id);
-    await addSong(songs[0]);
-    let checkedState = false;
-    if (checked) checkedState = true;
-    this.setState({
-      onLoading: false,
-      checked: checkedState,
-    });
+    if (checked) {
+      await addSong(songs[0]);
+      this.setState({
+        onLoading: false,
+        checked: true,
+      });
+    }
+    if (!checked) {
+      await removeSong(songs[0]);
+      this.setState({
+        onLoading: false,
+        checked: false,
+      });
+    }
   }
 
   render() {
     const { songName, songPreview, trackId, trackName } = this.props;
-    const { onLoading, favoriteSong, checked } = this.state;
-    const songVerify = favoriteSong.some((songID) => songID === trackId);
+    const { onLoading, checked } = this.state;
+
     return (
       <div>
         <div>
@@ -62,7 +67,7 @@ class MusicCard extends Component {
               id={ trackId }
               type="checkbox"
               name={ trackName }
-              checked={ songVerify || checked }
+              checked={ checked }
             />
           </label>
           <hr />
