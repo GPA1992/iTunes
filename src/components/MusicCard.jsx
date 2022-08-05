@@ -42,14 +42,13 @@ class MusicCard extends Component {
   }
 
   render() {
-    const { songName, songPreview, trackId, trackName } = this.props;
+    const { songPreview, trackId, trackName } = this.props;
     const { onLoading, checked } = this.state;
-
     return (
       <div>
         <div>
           { onLoading && (<Loading />)}
-          <h3>{ songName }</h3>
+          <h3>{ trackName }</h3>
           <audio data-testid="audio-component" src={ songPreview } controls>
             <track kind="captions" />
             O seu navegador não suporta o elemento
@@ -78,7 +77,6 @@ class MusicCard extends Component {
 }
 
 MusicCard.propTypes = {
-  songName: PropTypes.string.isRequired,
   songPreview: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
   trackName: PropTypes.string.isRequired,

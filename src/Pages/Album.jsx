@@ -47,11 +47,9 @@ class Album extends Component {
             { songs.map(({ trackName, previewUrl, trackId }) => (
               <MusicCard
                 key={ trackId }
-                songName={ trackName }
                 songPreview={ previewUrl }
                 albumImage={ artworkUrl100 }
                 trackId={ trackId }
-                songs={ songs }
                 trackName={ trackName }
               />
             ))}
