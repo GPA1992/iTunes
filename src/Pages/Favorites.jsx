@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
+/* import getMusics from '../services/musicsAPI'; */
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 
@@ -24,6 +25,20 @@ class Favorites extends Component {
       loading: false,
     });
   }
+
+  //  Preciso entender o motivo dessa função não funcionar
+  /*  ifChangeRemoveSong1 = async ({ target }) => {
+    const { id } = target;
+    console.log(`Removeu o ID${id}`);
+    this.setState({ loading: true });
+    const songs = await getMusics(id);
+    await removeSong(songs[0]);
+    const favoriteSongs = await getFavoriteSongs();
+    this.setState({
+      loading: false,
+      favoriteSongs,
+    });
+  } */
 
   ifChangeRemoveSong = async (song) => {
     this.setState({ loading: true });
@@ -66,6 +81,10 @@ class Favorites extends Component {
                       defaultChecked
                     />
                   </label>
+                  <span>
+                    esse ID é
+                    {song.trackId}
+                  </span>
                   <hr />
                 </div>
               ))}
