@@ -81,10 +81,6 @@ class Favorites extends Component {
                       defaultChecked
                     />
                   </label>
-                  <span>
-                    esse ID é
-                    {song.trackId}
-                  </span>
                   <hr />
                 </div>
               ))}

@@ -27,7 +27,6 @@ class Header extends Component {
 
   render() {
     const { user, onLoading } = this.state;
-    this.getUserName();
     return (
       <header data-testid="header-component">
         <Link to="/search" data-testid="link-to-search"> Search </Link>
