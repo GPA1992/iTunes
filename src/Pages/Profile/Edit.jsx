@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../../components/Header';
 import { getUser, updateUser } from '../../services/userAPI';
 import Loading from '../../components/Loading';
@@ -12,7 +12,6 @@ class Edit extends Component {
       description: '',
       onLoading: false,
       disableEnter: true,
-      saveNewProfile: false,
     }
 
     async componentDidMount() {
@@ -25,7 +24,7 @@ class Edit extends Component {
         image,
         description,
         onLoading: false,
-      });
+      }, this.checkAllForm);
     }
 
     checkAllForm = () => {
@@ -54,13 +53,14 @@ class Edit extends Component {
       await updateUser({ name, email, image, description });
       this.setState({
         onLoading: false,
-        saveNewProfile: true,
       });
+      const { history } = this.props;
+      history.push('/profile');
     }
 
     render() {
       const { onLoading, disableEnter, name,
-        email, description, image, saveNewProfile } = this.state;
+        email, description, image } = this.state;
       return (
         <div>
           <Header />
@@ -68,61 +68,58 @@ class Edit extends Component {
             { onLoading ? (<Loading />
             ) : (
               <div>
-                { saveNewProfile ? (<Redirect to="/profile" />
-                ) : (
-                  <div>
-                    <h3>Nome</h3>
-                    <input
-                      onChange={ this.getInfo }
-                      name="name"
-                      data-testid="edit-input-name"
-                      type="text"
-                      placeholder="nome"
-                      value={ name }
-                    />
-                    <br />
-                    <h3>email</h3>
-                    <input
-                      onChange={ this.getInfo }
-                      name="email"
-                      data-testid="edit-input-email"
-                      type="email"
-                      placeholder="email"
-                      value={ email }
-                    />
-                    <br />
-                    <h3>description</h3>
-                    <textarea
-                      onChange={ this.getInfo }
-                      name="description"
-                      data-testid="edit-input-description"
-                      type="text"
-                      cols="30"
-                      rows="10"
-                      placeholder="descrição"
-                      value={ description }
-                    />
-                    <br />
-                    <h3>image</h3>
-                    <input
-                      onChange={ this.getInfo }
-                      name="image"
-                      data-testid="edit-input-image"
-                      type="text"
-                      placeholder="URL da Imagem"
-                      value={ image }
-                    />
-                    <br />
-                    <button
-                      disabled={ disableEnter }
-                      onClick={ this.funcUpdateUser }
-                      type="submit"
-                      data-testid="edit-button-save"
-                    >
-                      salvar
-                    </button>
-                  </div>
-                )}
+                <div>
+                  <h3>Nome</h3>
+                  <input
+                    onChange={ this.getInfo }
+                    name="name"
+                    data-testid="edit-input-name"
+                    type="text"
+                    placeholder="nome"
+                    value={ name }
+                  />
+                  <br />
+                  <h3>email</h3>
+                  <input
+                    onChange={ this.getInfo }
+                    name="email"
+                    data-testid="edit-input-email"
+                    type="email"
+                    placeholder="email"
+                    value={ email }
+                  />
+                  <br />
+                  <h3>description</h3>
+                  <textarea
+                    onChange={ this.getInfo }
+                    name="description"
+                    data-testid="edit-input-description"
+                    type="text"
+                    cols="30"
+                    rows="10"
+                    placeholder="descrição"
+                    value={ description }
+                  />
+                  <br />
+                  <h3>image</h3>
+                  <input
+                    onChange={ this.getInfo }
+                    name="image"
+                    data-testid="edit-input-image"
+                    type="text"
+                    placeholder="URL da Imagem"
+                    value={ image }
+                  />
+                  <br />
+                  <button
+                    disabled={ disableEnter }
+                    onClick={ this.funcUpdateUser }
+                    type="submit"
+                    data-testid="edit-button-save"
+                  >
+                    Salvar
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -130,5 +127,9 @@ class Edit extends Component {
       );
     }
 }
-
+Edit.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 export default Edit;
