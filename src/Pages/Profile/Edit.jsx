@@ -68,61 +68,59 @@ class Edit extends Component {
             { onLoading ? (<Loading />
             ) : (
               <div>
-                { saveNewProfile ? (<Redirect to="/profile" />
-                ) : (
-                  <div>
-                    <h3>Nome</h3>
-                    <input
-                      onChange={ this.getInfo }
-                      name="name"
-                      data-testid="edit-input-name"
-                      type="text"
-                      placeholder="nome"
-                      value={ name }
-                    />
-                    <br />
-                    <h3>email</h3>
-                    <input
-                      onChange={ this.getInfo }
-                      name="email"
-                      data-testid="edit-input-email"
-                      type="email"
-                      placeholder="email"
-                      value={ email }
-                    />
-                    <br />
-                    <h3>description</h3>
-                    <textarea
-                      onChange={ this.getInfo }
-                      name="description"
-                      data-testid="edit-input-description"
-                      type="text"
-                      cols="30"
-                      rows="10"
-                      placeholder="descrição"
-                      value={ description }
-                    />
-                    <br />
-                    <h3>image</h3>
-                    <input
-                      onChange={ this.getInfo }
-                      name="image"
-                      data-testid="edit-input-image"
-                      type="text"
-                      placeholder="URL da Imagem"
-                      value={ image }
-                    />
-                    <br />
-                    <button
-                      disabled={ disableEnter }
-                      onClick={ this.funcUpdateUser }
-                      type="submit"
-                      data-testid="edit-button-save"
-                    >
-                      salvar
-                    </button>
-                  </div>
-                )}
+                { saveNewProfile && (<Redirect to="/profile" />)}
+                <div>
+                  <h3>Nome</h3>
+                  <input
+                    onChange={ this.getInfo }
+                    name="name"
+                    data-testid="edit-input-name"
+                    type="text"
+                    placeholder="nome"
+                    value={ name }
+                  />
+                  <br />
+                  <h3>email</h3>
+                  <input
+                    onChange={ this.getInfo }
+                    name="email"
+                    data-testid="edit-input-email"
+                    type="email"
+                    placeholder="email"
+                    value={ email }
+                  />
+                  <br />
+                  <h3>description</h3>
+                  <textarea
+                    onChange={ this.getInfo }
+                    name="description"
+                    data-testid="edit-input-description"
+                    type="text"
+                    cols="30"
+                    rows="10"
+                    placeholder="descrição"
+                    value={ description }
+                  />
+                  <br />
+                  <h3>image</h3>
+                  <input
+                    onChange={ this.getInfo }
+                    name="image"
+                    data-testid="edit-input-image"
+                    type="text"
+                    placeholder="URL da Imagem"
+                    value={ image }
+                  />
+                  <br />
+                  <button
+                    disabled={ disableEnter }
+                    onClick={ this.funcUpdateUser }
+                    type="submit"
+                    data-testid="edit-button-save"
+                  >
+                    salvar
+                  </button>
+                </div>
               </div>
             )}
           </div>
